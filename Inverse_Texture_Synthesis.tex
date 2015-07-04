@@ -3,8 +3,15 @@
 \usepackage{a4}
 \usepackage[english]{babel}
 \usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage[font=small,labelfont=bf]{caption}
 
+\newlength\tindent
+\setlength{\tindent}{\parindent}
+\setlength{\parindent}{0pt}
+\renewcommand{\indent}{\hspace*{\tindent}}
 
+\bibliographystyle{plain} 
 
 \begin{document}
 
@@ -14,7 +21,7 @@
 \include{inc/bisi}
 \include{inc/its}
 \include{inc/summary}
+\bibliography{articles}
 
-Halöö
 
 \end{document}
