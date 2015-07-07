@@ -1,7 +1,56 @@
 \section{Bidirectional Similarity}
-\subsection{Overview}
+As we have seen in the first section that resizing and croping do no not fit our estimations of a smaller representation. This section will introduce an algorithm called 'bidirectional similarity' found by \textsc{Simakov, Caspi, Shechtman} and \textsc{Irani}.\\
+It works by gradually resizing the original image and recalculate then the pixels by comparing target image with orignal image for completeness and coherence.\\
+The next subsections will explain every step of the algorithm by detail, beginning with the terms 'complete' and 'coherent'.
+
 \subsection{Completeness and Coherence}
-\subsubsection{Examples}
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.6]{img/cac}
+\caption[Completeness and Coherence]{A basic example for completeness and coherence. Target image \textit{T\textsubscript{1}} satisifies completeness, \textit{T\textsubscript{2}} is coherent and \textit{T\textsubscript{3}} fulfills both - completeness and coherence.}
+\label{fig:Completeness and Coherence}
+\end{figure}
+
+Completeness and Coherence are terms to describe similarity between two related images. Figure \ref{fig:Completeness and Coherence} shows a basic example, where the source image contains two colored areas - a green and a red one. A target image is called 'complete' when it contains all visual informations of the source image. \textit{T\textsubscript{1}} is therefore complete, because it contains both colored areas of the source image \textit{S}, additionally it contains a purple star.\\
+On the other hand an image is called 'coherent' when it does not introduce new visual artifacts, which the source image does not contain. Target image \textit{T\textsubscript{2}} is coherent, because it has no new visual informations in it, but it lacks the red area.\\
+If a target image satisfies both criteria - like \textit{T\textsubscript{3}} does - then it is complete and coherent. So \textit{T\textsubscript{3}} is more similar to \textit{S} than \textit{T\textsubscript{1}} and \textit{T\textsubscript{2}}.\\
+Now knowing what those terms describe it is important to take a look on how they work technically.
+
+\subsubsection*{Completeness}
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.65]{img/completeness}
+\caption[Completenesse]{Schematic example for completeness check.}
+\label{fig:Completeness}
+\end{figure}
+
+As discussed before completeness describes that the target image contains every information of the source image. Figure \ref{fig:Completeness} shows how this works technically. For every patch \textit{P} in source image \textit{S} compare it with every possible patch in \textit{T} and find the most similar to it.
+
+\subsubsection*{Coherence}
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.65]{img/coherence}
+\caption[Coherence]{Schematic example for coherence check.}
+\label{fig:Coherence}
+\end{figure}
+
+Checking for coherence works similar to completeness except the direction of comparison has changed. Figure \ref{fig:Coherence} shows it. Now for every patch \textit{Q} in \textit{T} compare it with every possible patch in \textit{S} and find the most similar to it.\\
+Note that it is not enough to check in only one direction because the algorithm could miss to find for example new artifacts which the completeness check does not find.\\
+In other words: \textit{Q} can be the most similar patch to \textit{P}, but \textit{P} does not have to be the most similar patch to \textit{Q}.
+
+\subsubsection*{Examples}
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.9]{img/compcohexample}
+\caption[Compcohexample]{Completeness and coherence examples with real photos. The upper image shows some buildings with persons in front and three variants of target images.\\ The lower photo shows a person and a animal with three variants of target images.\\ Additionally there are shown the distance values introduced in section 2.2.\\ Examples from \cite{bisi} }
+\label{fig:Compcohexample}
+\end{figure}
+
+Figure \ref{fig:Compcohexample} shows some examples for completeness and coherence with real photos. The complete images show every informations of the source images like buildings, persons and the animal but there are also some seams which are not in the source image.\\
+The coherent images which where achieved by croping \cite{bisi} do not have any seams or other new artifacts but they miss the persons on them.\\
+The complete and coherent target images do have all information like buildings, persons and animal, and they do not introduce new artifacts. They are results of the bidrectional similarity summarization \cite{bisi}.
+
+
 \subsection{Measurement}
 \subsection{Algorithm}
 \subsubsection{Update rule}

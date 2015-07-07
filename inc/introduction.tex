@@ -1,19 +1,19 @@
 \section{Introduction}
 When working with images, it is often usual to use a smaller representation of the original image.
-This can be achieved either by scaling down the image or croping it. This write-up will show, why resizing and croping are not the best methods to achieve it and introduce better solutions like bidirectional similarity\cite{bisi} and inverse texture synthesis\cite{its}. 
+This can be achieved either by scaling down the image or croping it. This write-up will show, why resizing and croping are not the best methods to achieve it and introduce better solutions like \textit{bidirectional similarity} \cite{bisi} and \textit{inverse texture synthesis} \cite{its}. 
 
 \begin{figure}[h]
 \centering
 \includegraphics[scale=0.9]{img/ShrinkingCropping}
-\caption[blah]{The original image on top shows parts of the University of Mainz with view on
+\caption[Image shrinking]{The original upper image shows parts of the University of Mainz with view on
 the mensa at the end of street and a person in front. (a) was normally shrinked and (b) was shrinked by using content aware scaling of Adobe Photoshop\footnotemark. (c) is a result of croping, focusing on the mensa.}
-\label{Image shrinking}
+\label{fig:Image shrinking}
 \end{figure}
 \footnotetext{Further reading at Adobe Helpcenter: https://helpx.adobe.com/photoshop/using/content-aware-scaling.html}
 
 
 \subsection{Shrinking images}
-Shrinking images is probably the fastest way to get the desired smaller representation of the image. A big advantage of shrinking images is that the layout of the image remains as it was before. On the other hand the smaller image loses quality of the resolution and the change of aspect ratio caused distortion. Figure 1 (a) shows a normal down scaled image. As expected the person on it doesn't look like natural anymore because of the distortion.\\
+Shrinking images is probably the fastest way to get the desired smaller representation of the image. A big advantage of shrinking images is that the layout of the image remains as it was before. On the other hand the smaller image loses quality of the resolution and the change of aspect ratio caused distortion. Figure \ref{fig:Image shrinking} (a) shows a normal down scaled image. As expected the person on it doesn't look like natural anymore because of the distortion.\\
 Figure 1 (b) shows another method of image shrinking which uses the paradigma of importance-based scaling where unimportant parts get more down scaled than important parts. So compared with (a) the person and the tree look way more natural, but the sidewalk disappears because of different scalings.
 
 
