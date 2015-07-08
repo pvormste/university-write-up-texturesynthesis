@@ -52,6 +52,45 @@ The complete and coherent target images do have all information like buildings, 
 
 
 \subsection{Measurement}
+Before taking a step further to the algorithm it is important to know how to measure bidirectional similarity between a source image and a target image. From the previous subsection 2.1 we know how completeness and coherence work technically. The remaining step now is to convert it to a mathematical equation as described in \cite{bisi}.
+
+\subsubsection*{Measure completeness}
+For every patch \textit{P} in \textit{S} compare it to every possible patch \textit{Q} in \textit{T} and find one with minimal difference.
+
+\large
+\begin{equation}
+\label{Eq:Measure completeness}
+d_{complete}(S,T)=\frac{1}{N_{S}}\sum_{P \subset S} \min\limits_{Q \subset T} D(P,Q)
+\end{equation}
+\normalsize
+
+Eq. \ref{Eq:Measure completeness} calculates the \textit{distance d} between source image \textit{S} and target image \textit{T} in relation to completeness. \textit{N\textsubscript{S}} is the number of patches in \textit{S} for weighted average of the distance.
+
+\subsubsection*{Measure coherence}
+For every patch \textit{Q} in \textit{T} compare it to every possible patch \textit{P} in \textit{S} and find one with minimal difference.
+
+\large
+\begin{equation}
+\label{Eq:Measure coherence}
+d_{cohere}(S,T)=\frac{1}{N_{T}}\sum_{Q \subset T} \min\limits_{P \subset S} D(Q,P)
+\end{equation}
+\normalsize
+
+Like for completeness measure Eq. \ref{Eq:Measure coherence} calculates \textit{d} in relation to coherence. \textit{N\textsubscript{T}} is the number of patches in \textit{T} for weighted average of the distance.
+
+\subsubsection*{Overall distance and examples}
+To calculate the overall distance we just add \textit{d\textsubscript{cohere}} to \textit{d\textsubscript{complete}}.
+
+\large
+\begin{align}
+\label{Eq:Overall measure}
+d(S,T)&=d_{complete}(S,T)+d_{cohere}(S,T) \nonumber \\
+&=\frac{1}{N_{S}}\sum_{P \subset S} \min\limits_{Q \subset T} D(P,Q)+\frac{1}{N_{T}}\sum_{Q \subset T} \min\limits_{P \subset S} D(Q,P)
+\end{align}
+\normalsize
+
+Figure \ref{fig:Compcohexample} on page \pageref{fig:Compcohexample} shows distance values by Eq. \ref{Eq:Overall measure} for some target images. The worst values are found for complete images, the best for complete and coherent images. The value 0 means, that the images are equal.
+
 \subsection{Algorithm}
 \subsubsection{Update rule}
 \subsubsection{Gradual resizing}
