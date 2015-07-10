@@ -55,7 +55,7 @@ The complete and coherent target images do have all information like buildings, 
 Before taking a step further to the algorithm it is important to know how to measure bidirectional similarity between a source image and a target image. From the previous subsection 2.1 we know how completeness and coherence work technically. The remaining step now is to convert it to a mathematical equation as described in \cite{bisi}.
 
 \subsubsection*{Measure completeness}
-For every patch \textit{P} in \textit{S} compare it to every possible patch \textit{Q} in \textit{T} and find one with minimal difference.
+For every patch \textit{P} in \textit{S} compare it to every possible patch \textit{Q} in \textit{T} and find one with minimal difference. (Fig. \ref{fig:Completeness})
 
 \large
 \begin{equation}
@@ -67,7 +67,7 @@ d_{complete}(S,T)=\frac{1}{N_{S}}\sum_{P \subset S} \min\limits_{Q \subset T} D(
 Eq. \ref{Eq:Measure completeness} calculates the \textit{distance d} between source image \textit{S} and target image \textit{T} in relation to completeness. \textit{N\textsubscript{S}} is the number of patches in \textit{S} for weighted average of the distance.
 
 \subsubsection*{Measure coherence}
-For every patch \textit{Q} in \textit{T} compare it to every possible patch \textit{P} in \textit{S} and find one with minimal difference.
+For every patch \textit{Q} in \textit{T} compare it to every possible patch \textit{P} in \textit{S} and find one with minimal difference. (Fig. \ref{fig:Coherence})
 
 \large
 \begin{equation}
@@ -89,10 +89,59 @@ d(S,T)&=d_{complete}(S,T)+d_{cohere}(S,T) \nonumber \\
 \end{align}
 \normalsize
 
-Figure \ref{fig:Compcohexample} on page \pageref{fig:Compcohexample} shows distance values by Eq. \ref{Eq:Overall measure} for some target images. The worst values are found for complete images, the best for complete and coherent images. The value 0 means, that the images are equal.
+Figure \ref{fig:Compcohexample} on page \pageref{fig:Compcohexample} shows distance values by Eq. \ref{Eq:Overall measure} for some target images. The worst values are found for complete images, the best for complete and coherent images. A value of 0 means that the images are the same.
 
 \subsection{Algorithm}
-\subsubsection{Update rule}
+With all the knowledge it is now possible to introduce the algorithm. First of all the goal of the algorithm is to minimize Eq. \ref{Eq:Overall measure}:
+
+\large
+\begin{equation}
+\label{Eq:Minimize distance}
+T_{output}=\text{arg} \min\limits_{T}d(S,T)
+\end{equation}
+\normalsize
+
 \subsubsection{Gradual resizing}
+As mentioned in the beginning of this section the algorithm uses \textit{gradual resizing}. This means that in every step the next target image will be shrinked a little bit and the pixels are then recalculated.\\
+The critical step is to find a good initial guess for shrinking the image. If the shrinking amount is to big some valueable information could get lost because of quality reduction. So \cite{bisi} found out that shrinking to a size of 95\% supplies good results.\\
+Figure \ref{fig:Gradual resizing} shows an example for gradual resizing. As it can be clearly seen every step has its own output image \textit{T\textsubscript{k}} and the most possible minimal distance value for its size.
+
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.8]{img/gradualresizing}
+\caption[Gradual resizing]{The upper images show an example of gradual resizing. The lower image describes the algorithm with gradual resizing and using the update rule introduced in subsection 2.3.2.\\ Images by \cite{bisi}. }
+\label{fig:Gradual resizing}
+\end{figure}
+
+\subsubsection{Update rule}
+After every resizing step the pixels must be recalculated to maintain the quality of the orignal image. This is done by the \textit{update rule}.
+
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.7]{img/updaterule}
+\caption[Update rule]{This figure shows how the update rule votes the color for one pixel \textit{q} in the target image \textit{T}.}
+\label{fig:Update rule}
+\end{figure}
+
+The update rule as desrcibed in \cite{bisi}:
+
+\vspace{15px}
+1. For each patch $\hat{P} \subset S$ find most similar patch $\hat{Q} \subset T^{(l)}$. Pixels in $\hat{P}$ vote for pixels in $\hat{Q}$ with weight $\frac{1}{N_{S}}$. (Completeness)
+
+\vspace{15px}
+2. For each patch $Q \subset T^{(l)}$ find the most similar source patch $P \subset S$. Colors of pixels in \textit{P} are votes for pixel in \textit{Q} with weight $\frac{1}{N_{T}}$. (Coherence)
+
+\vspace{15px}
+3. For each target pixel $q$ take weighted average of all its votes as its new color $T^{(l+1)}(q)$.
+
+\vspace{15px}
+With those steps we receive following equation for the update rule:
+\large
+\begin{equation}
+\label{Eq:Update rule}
+T(q)=\frac{\frac{1}{N_{S}} \sum_{j=1}^{n} S(\hat{p}_{j}) + \frac{1}{N_{T}} \sum_{i=1}^{m} S(p_{i})}{\frac{n}{N_{S}} + \frac{m}{N_{T}}}
+\end{equation}
+\normalsize
+
 \subsubsection{Importance weights}
 \subsection{Performance and limitations}
