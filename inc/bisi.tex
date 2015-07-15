@@ -109,7 +109,7 @@ Figure \ref{fig:Gradual resizing} shows an example for gradual resizing. As it c
 \begin{figure}[h]
 \centering
 \includegraphics[scale=0.8]{img/gradualresizing}
-\caption[Gradual resizing]{The upper images show an example of gradual resizing. The lower image describes the algorithm with gradual resizing and using the update rule introduced in subsection 2.3.2.\\ Images by \cite{bisi}. }
+\caption[Gradual resizing]{The upper images show an example of gradual resizing. The lower image describes the algorithm with gradual resizing and using the update rule introduced in subsection 2.3.2.\\ Images from \cite{bisi}. }
 \label{fig:Gradual resizing}
 \end{figure}
 
@@ -136,6 +136,7 @@ The update rule as desrcibed in \cite{bisi}:
 
 \vspace{15px}
 With those steps we receive following equation for the update rule:
+
 \large
 \begin{equation}
 \label{Eq:Update rule}
@@ -143,5 +144,48 @@ T(q)=\frac{\frac{1}{N_{S}} \sum_{j=1}^{n} S(\hat{p}_{j}) + \frac{1}{N_{T}} \sum_
 \end{equation}
 \normalsize
 
+\vspace{15px}
+Some more explanations to the update rule:
+
+\vspace{7px}
+- $N_{S}$ is the number of patches in $S$, while $n$ is the number of possible similar patches $\hat{P}$ in $S$ to a patch $\hat{Q}$ with pixel $q$ in $T$. $n$ can be $0$ if there are no similar patches.
+
+\vspace{7px}
+- $N_{T}$ is the number of patches in $T$, while $m$ is the number of patches $Q$ containing $q$ in $T$. If the patches do have a size of $49$ pixels, there are also $49$ patches containing pixel $q$. 
+
+\vspace{7px}
+- Due to the different number of similar patches ($n$ and $m$ in every iteration) the votes must be weighted (Step 3).
+
+
+
 \subsubsection{Importance weights}
-\subsection{Performance and limitations}
+In some cases, it is undesirable that certain parts will be changed, e.g. when persons are involved. The algorithm will them look like unnaturally, because the algorithm does not know, that changing every part of a head is important for natural look.\\
+Figure \ref{fig:Importance_weights} shows the usage of importance weights. As it can be clearly seen that without importance weights the humans does not look natural anymore. The algorithm did not know that the heads are more important than the bookshelf in the background.\\
+Importance weights are simply white areas on an additional layer which tells the algorithm not to touch those pixels. The result with importance weight is much better than the one without. The heads look much more natural. But you can find some parts where some more importance weights would have been better like the shoulder of the woman in the middle of the image.
+
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.8]{img/importance_weights}
+\caption[Importance weights]{The top left image shows the image which should be summarized. Top right shows importance weighting, where white areas should not be touched by the algorithm. The lower images are results with and without weights.\\ Images from \cite{bisi}}
+\label{fig:Importance_weights}
+\end{figure}
+
+\subsection{Conclusion: Performance and comparison}
+The performance of this algorithm is slower than similar algorithms. The current implementation in matlab needs 5 minutes to half the size of 250x200 pixels. The algorithm scales lineary and can be optimized by using multiple CPU/GPU. \cite{bisi}\\
+This algorithm is not limited to images only - it can also be used for video montage and synthesis. In advanced it can reshuffle photos or summarize (shorten) videos without changing the play speed.
+
+\subsubsection*{Comparison to seam carving}
+At the end of this section a small comparison to another similar algorithm: \textit{seam carving} \cite{seamcarv}.
+Figure \ref{fig:Seam carving} shows some comparing images to seam carving. As you can see, in most cases the result of bidirectional similarity looks better and not overfilled with redundancies (like the windows on the second and third image).\\
+The first comparison shows, that the cow on the summary of bidirectional image is missing, while it exists on the summary of seam carving. Depending on what information should be summarized it is a good or a bad summary. As the original image shows the cow and the human the result of bidirectional similarity is more likely a bad summary of the whole image but it preserves the quality of the human.\\
+The third image with the dolphin on it shows the weakness of seam carving as the dolphin gets in the result completely distorted and the whole image filled with water.\\
+The last image is quite special because both results are not so good summaries. The result of bidirectional similarity misses informations so it is hard to recognize what it is on the image. The result of seam carving has too much information on it or too many redundancies and it is not so easy to recognize the original building. The towers in the background are completely missing.\\
+
+
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.95]{img/seamcarving}
+\caption[Seam carving]{This figure shows some comparisons between bidirectional similarity and seam carving.\\ Dolphin image from \cite{seamcarv}, last image from \cite{wolf}.\\
+Comparison from \cite{bisi}.}
+\label{fig:Seam carving}
+\end{figure}
