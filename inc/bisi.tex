@@ -1,5 +1,5 @@
 \section{Bidirectional Similarity}
-As we have seen in the first section that resizing and croping do no not fit our estimations of a smaller representation. This section will introduce an algorithm called 'bidirectional similarity' found by \textsc{Simakov, Caspi, Shechtman} and \textsc{Irani}.\\
+As we have seen in the first section that resizing and croping do no not fit our estimations of a smaller representation. This section will introduce an algorithm called \textit{bidirectional similarity} found by \textsc{Simakov, Caspi, Shechtman} and \textsc{Irani}.\\
 It works by gradually resizing the original image and recalculate then the pixels by comparing target image with orignal image for completeness and coherence.\\
 The next subsections will explain every step of the algorithm by detail, beginning with the terms 'complete' and 'coherent'.
 
@@ -171,8 +171,10 @@ Importance weights are simply white areas on an additional layer which tells the
 \end{figure}
 
 \subsection{Conclusion: Performance and comparison}
-The performance of this algorithm is slower than similar algorithms. The current implementation in matlab needs 5 minutes to half the size of 250x200 pixels. The algorithm scales lineary and can be optimized by using multiple CPU/GPU. \cite{bisi}\\
+The performance of this algorithm is slower than similar algorithms. The current implementation in matlab needs 5 minutes to half the size of 250x200 pixels\footnotemark. The algorithm scales lineary and can be optimized by using multiple CPU/GPU. \cite{bisi}\\
 This algorithm is not limited to images only - it can also be used for video montage and synthesis. In advanced it can reshuffle photos or summarize (shorten) videos without changing the play speed.
+
+\footnotetext{Of course this depends on the machine but it gives an idea of the performance. }
 
 \subsubsection*{Comparison to seam carving}
 At the end of this section a small comparison to another similar algorithm: \textit{seam carving} \cite{seamcarv}.
