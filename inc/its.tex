@@ -20,6 +20,10 @@ User can define their own control maps to achieve different textures like painti
 
 
 \subsection{Algorithm}
+The algorithm of inverse texture synthesis starts by filling the smaller representation with random pixels from the original image. Not only the color information from the pixel will be copied also the original location of it so it can be compared to its neighbors in the original image.\\
+Like the bidirectional similarity it is a two-way comparison of patches by finding the most similar ones (section 2.1). The check for coherence is called \textit{forward M-step} and the check for completeness is called \textit{inverse M-step}.\\
+The last step of the algorithm is called \textit{w E-step} where the result is manipulated by an \textit{orientation field}.
+
 \subsubsection{z E-step}
 \subsubsection{Forward M-step}
 \subsubsection{Inverse M-step}
