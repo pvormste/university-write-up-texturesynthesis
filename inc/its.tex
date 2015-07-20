@@ -38,17 +38,24 @@ The origin was also copied when initializing the compactation with random pixels
 From the neighbors ${5,6,7,8}$ the algorithm can now calculate a median color for pixel $0$.
 
 \subsubsection{Forward M-step}
-The forward M-step is similar to coherence check in bidirectional similarity. This step does not need any additional computation, for a patch $Q$ in $T$ containing pixel $q$ it just looks for a best matching patch $P$ in $S$.\\
+The forward M-step is similar to coherence check in bidirectional similarity. This step does not need any additional computation. For a patch $Q$ in $T$ containing pixel $q$ it just looks for a best matching patch $P$ in $S$.\\
 In Figure \ref{fig:Inverse texture synthesis algortihm} (a) the forward M-step could be finding the best matching pixel from ${5,6,7,8}$ to pixel $0$. This is a constant time operation and not applicable to the inverse M-step. 
 
 \subsubsection{Inverse M-step}
+The inverse M-step is similar to completeness check in bidirectional similarity. But it works different to the forward M-Step. Because of the constantly changing compactation it is not possible to save the location of the copied pixels. So comparing patches between source image $S$ and compaction $T$ is only possible by exhaustive search.\\
+Figure \ref{fig:Inverse texture synthesis algortihm} (b) shows an example for the inverse M-step. If patch $B$ needs to find a similar patch in $T$ it has to do an exhaustive search. This results in a bad performance if every patch have to do an exhaustive search.\\
+Inverse texture synthesis brings a faster solution: Instead of looking for a similar patch in $T$ the algorithm first looks for a similar patch in $S$. So in the example: patch $A$ matches patch $B$ and $B$ matches patch $C$ in target image $T$. So patch $A$ also matches patch $C$.\\
+Every patch which matches patch $B$ also matches to patch $C$. This gives a performenace boost compared to simple exhaustive search, because there can be build a tree between the patches which are similar to $B$ and $B$. It is a logarithmic speed up.
+
+
 \subsubsection{w E-step}
-In the last step, called \textit{w E-step}, the algorithm uses an orientation field to optimize the result of compactation. It works like and additional layer of information.
+In the last step, called \textit{w E-step}, the algorithm uses an orientation field to optimize the result of compactation. It works like and additional layer of information.\\
+Figure \ref{fig:Orientation field} shows some examples for orientation fields. The most important aspect to learn from here is, that different orientation fields have different results in compactation.
 
 \begin{figure}[h]
 \centering
 \includegraphics[scale=0.4]{img/orientationfield}
-\caption[Orientation field]{This figure shows within each row different orientation fields. (a) is the orignal texture with uniform x-y-orientation. (b) shows the orientation fields from \cite{paris}. (c) shows orientation fields via manual specification followed by interpolation. And (d) is the orientation field from \cite{its} based on (c).\\ Images from \cite{its}.}
+\caption[Orientation field]{This figure shows within each row different orientation fields. (a) is the orignal texture with uniform x-y-orientation. (b) shows the orientation fields from \cite{paris}. (c) shows orientation fields via manual specification followed by interpolation. And (d) is the orientation field from \cite{its} based on (c). (e), (f), (g) and (h) are the resulting images from (a), (b), (c) and (d).\\ Images from \cite{its}.}
 \label{fig:Orientation field}
 \end{figure}
 
