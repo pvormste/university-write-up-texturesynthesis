@@ -58,7 +58,31 @@ Figure \ref{fig:Orientation field} shows some examples for orientation fields. T
 \caption[Orientation field]{This figure shows within each row different orientation fields. (a) is the orignal texture with uniform x-y-orientation. (b) shows the orientation fields from \cite{paris}. (c) shows orientation fields via manual specification followed by interpolation. And (d) is the orientation field from \cite{its} based on (c). (e), (f), (g) and (h) are the resulting images from (a), (b), (c) and (d).\\ Images from \cite{its}.}
 \label{fig:Orientation field}
 \end{figure}
+\pagebreak
+
+\begin{figure}[h]
+\centering
+\includegraphics[scale=1]{img/its-example}
+\caption[Inverse texture synthesis example]{This figure shows an example usage of inverse texture synthesis. On the left is the original texture in different luminance variations and the control map. After using the algorithm, there can be found the compactation of original texture and control map. The compactaions can be used for forward synthesis. There are also some calculation benchmarks between useage original texture and compactation.\\ Images by \cite{its}.}
+\label{fig:Inverse texture synthesis example}
+\end{figure}
 
 
 \subsection{Example}
+As bidirectional similarity there are different approaches to use the algorithm. The simplest one is to calculate a compactation for reusing it in forward synthesis.\\
+Figure \ref{fig:Inverse texture synthesis example} shows such an example usage. The first step in this example is to use inverse texture synthesis to create a compaction from the original texture and the original control map.\\
+The original texture has a size of 890x890 pixels in eleven different luminance variations. The original control map has the same size. The compactation size is 128x128 pixels. This compactations can now be used for texturing a mesh like the seehorse. First the (compacted) control map is used to manipulate the final look of the texture and then the orignal texture is drawn on the mesh. In this example there were used the original texture and the compaction for comparing purposes. There are nearly no differences by using the compaction instead of the original texture.\\
+There can also be observed that by using the compactation it is much more faster to texture the seehorse (Original texture: 14776 sec, compactation: 1719 sec).
+\pagebreak
+
 \subsection{Performance and limitations}
+The performance of the inverse texture synthesis algorithm is fairly efficient and more efficient than the bidirectional similarity algorithm.\\
+Figure \ref{fig:Inverse texture synthesis performance} shows an example for compactation. This compactation was achieved in 147 sec. Further is the algorithm capable of doing forward synthesis and GPU-acclelerated calculations.\\
+If the control map is not reasonably enough related to the original map the compactation can not recover the original texture by forward synthesis.
+
+\begin{figure}[h]
+\centering
+\includegraphics[scale=1]{img/its-banana}
+\caption[Inverse texture synthesis performance]{An example image for performance demonstration.\\ Images by \cite{its}.}
+\label{fig:Inverse texture synthesis performance}
+\end{figure}
