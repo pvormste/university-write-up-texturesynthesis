@@ -1,18 +1,18 @@
 \section{Bidirectional Similarity}
-As we have seen in the first section that resizing and croping do no not fit our estimations of a smaller representation. This section will introduce an algorithm called \textit{bidirectional similarity} found by \textsc{Simakov, Caspi, Shechtman} and \textsc{Irani}.\\
-It works by gradually resizing the original image and recalculate then the pixels by comparing target image with orignal image for completeness and coherence.\\
-The next subsections will explain every step of the algorithm by detail, beginning with the terms 'complete' and 'coherent'.
+As we have seen in the first section, resizing and cropping do not fit our expactation of a smaller representation. This section will introduce an algorithm called \textit{bidirectional similarity} discovered by \textsc{Simakov, Caspi, Shechtman} and \textsc{Irani}.\\
+It works by gradually resizing the original image and recalculate the pixels by comparing target image with orignal image for completeness and coherence.\\
+The next subsections will explain every step of the algorithm in detail, beginning with the terms 'complete' and 'coherent'.
 
 \subsection{Completeness and Coherence}
 \begin{figure}[h]
 \centering
 \includegraphics[scale=0.6]{img/cac}
-\caption[Completeness and Coherence]{A basic example for completeness and coherence. Target image \textit{T\textsubscript{1}} satisifies completeness, \textit{T\textsubscript{2}} is coherent and \textit{T\textsubscript{3}} fulfills both - completeness and coherence.}
+\caption[Completeness and Coherence]{A basic example for completeness and coherence. Target image \textit{T\textsubscript{1}} satisfies completeness, \textit{T\textsubscript{2}} is coherent and \textit{T\textsubscript{3}} fulfills both - completeness and coherence.}
 \label{fig:Completeness and Coherence}
 \end{figure}
 
-Completeness and Coherence are terms to describe similarity between two related images. Figure \ref{fig:Completeness and Coherence} shows a basic example, where the source image contains two colored areas - a green and a red one. A target image is called 'complete' when it contains all visual informations of the source image. \textit{T\textsubscript{1}} is therefore complete, because it contains both colored areas of the source image \textit{S}, additionally it contains a purple star.\\
-On the other hand an image is called 'coherent' when it does not introduce new visual artifacts, which the source image does not contain. Target image \textit{T\textsubscript{2}} is coherent, because it has no new visual informations in it, but it lacks the red area.\\
+Completeness and Coherence are terms to describe similarity between two related images. Figure \ref{fig:Completeness and Coherence} shows a basic example, where the source image contains two colored areas - a green and a red one. A target image is called 'complete' when it contains all visual information of the source image. \textit{T\textsubscript{1}} is therefore complete, because it contains both colored areas of the source image \textit{S}, additionally it contains a purple star.\\
+On the other hand an image is called 'coherent' when it does not introduce new visual artifacts which the source image does not contain. Target image \textit{T\textsubscript{2}} is coherent, because it has no new visual information in it, but it lacks the red area.\\
 If a target image satisfies both criteria - like \textit{T\textsubscript{3}} does - then it is complete and coherent. So \textit{T\textsubscript{3}} is more similar to \textit{S} than \textit{T\textsubscript{1}} and \textit{T\textsubscript{2}}.\\
 Now knowing what those terms describe it is important to take a look on how they work technically.
 
@@ -24,9 +24,9 @@ Now knowing what those terms describe it is important to take a look on how they
 \label{fig:Completeness}
 \end{figure}
 
-As discussed before completeness describes that the target image contains every information of the source image. Figure \ref{fig:Completeness} shows how this works technically. For every patch \textit{P} in source image \textit{S} compare it with every possible patch in \textit{T} and find the most similar to it.
+As discussed before, completeness requires that the target image contains every information of the source image. Figure \ref{fig:Completeness} shows how this works technically: For every patch \textit{P} in source image \textit{S}, compare it with every possible patch in \textit{T} and find the most similar to it.
 
-\subsubsection*{Coherence}
+
 \begin{figure}[h]
 \centering
 \includegraphics[scale=0.65]{img/coherence}
@@ -34,21 +34,23 @@ As discussed before completeness describes that the target image contains every 
 \label{fig:Coherence}
 \end{figure}
 
-Checking for coherence works similar to completeness except the direction of comparison has changed. Figure \ref{fig:Coherence} shows it. Now for every patch \textit{Q} in \textit{T} compare it with every possible patch in \textit{S} and find the most similar to it.\\
-Note that it is not enough to check in only one direction because the algorithm could miss to find for example new artifacts which the completeness check does not find.\\
+\subsubsection*{Coherence}
+
+Checking for coherence works similar to completeness except the direction of comparison has changed. Figure \ref{fig:Coherence} shows that. Now for every patch \textit{Q} in \textit{T}: Compare it with every possible patch in \textit{S} and find the most similar to it.\\
+Note that it is not enough to check in only one direction because the algorithm could fail to find for example new artifacts which the completeness check does not find.\\
 In other words: \textit{Q} can be the most similar patch to \textit{P}, but \textit{P} does not have to be the most similar patch to \textit{Q}.
 
 \subsubsection*{Examples}
 \begin{figure}[h]
 \centering
 \includegraphics[scale=0.9]{img/compcohexample}
-\caption[Compcohexample]{Completeness and coherence examples with real photos. The upper image shows some buildings with persons in front and three variants of target images.\\ The lower photo shows a person and a animal with three variants of target images.\\ Additionally there are shown the distance values introduced in section 2.2.\\ Examples from \cite{bisi} }
+\caption[Compcohexample]{Completeness and coherence examples with real photos. The upper image shows some buildings with persons in front and three variants of target images.\\ The lower photo shows a person and an animal with three variants of target images.\\ Additionally, the distance values being introduced in section 2.2 are shown.\\ Examples from \cite{bisi} }
 \label{fig:Compcohexample}
 \end{figure}
 
-Figure \ref{fig:Compcohexample} shows some examples for completeness and coherence with real photos. The complete images show every informations of the source images like buildings, persons and the animal but there are also some seams which are not in the source image.\\
-The coherent images which where achieved by croping \cite{bisi} do not have any seams or other new artifacts but they miss the persons on them.\\
-The complete and coherent target images do have all information like buildings, persons and animal, and they do not introduce new artifacts. They are results of the bidrectional similarity summarization \cite{bisi}.
+Figure \ref{fig:Compcohexample} shows some examples for completeness and coherence with real photos. The complete images show every information of the source images like buildings, persons and the animal but there are also some seams which are not in the source images.\\
+The coherent images which were achieved by cropping \cite{bisi} do not have any seams or other new artifacts but they miss the persons on them.\\
+The complete and coherent target images do have all information like buildings, persons and animal, and they do not introduce new artifacts. They are results of the bidirectional similarity summarization \cite{bisi}.
 
 
 \subsection{Measurement}
@@ -76,7 +78,7 @@ d_{cohere}(S,T)=\frac{1}{N_{T}}\sum_{Q \subset T} \min\limits_{P \subset S} D(Q,
 \end{equation}
 \normalsize
 
-Like for completeness measure Eq. \ref{Eq:Measure coherence} calculates \textit{d} in relation to coherence. \textit{N\textsubscript{T}} is the number of patches in \textit{T} for weighted average of the distance.
+Like for completeness measure, Eq. \ref{Eq:Measure coherence} calculates \textit{d} in relation to coherence. \textit{N\textsubscript{T}} is the number of patches in \textit{T} for weighted average of the distance.
 
 \subsubsection*{Overall distance and examples}
 To calculate the overall distance we just add \textit{d\textsubscript{cohere}} to \textit{d\textsubscript{complete}}.
@@ -92,7 +94,7 @@ d(S,T)&=d_{complete}(S,T)+d_{cohere}(S,T) \nonumber \\
 Figure \ref{fig:Compcohexample} on page \pageref{fig:Compcohexample} shows distance values by Eq. \ref{Eq:Overall measure} for some target images. The worst values are found for complete images, the best for complete and coherent images. A value of 0 means that the images are the same.
 
 \subsection{Algorithm}
-With all the knowledge it is now possible to introduce the algorithm. First of all the goal of the algorithm is to minimize Eq. \ref{Eq:Overall measure}:
+With all the knowledge it is now possible to introduce the algorithm. First of all, the goal of the algorithm is to minimize Eq. \ref{Eq:Overall measure}:
 
 \large
 \begin{equation}
@@ -102,9 +104,9 @@ T_{output}=\text{arg} \min\limits_{T}d(S,T)
 \normalsize
 
 \subsubsection{Gradual resizing}
-As mentioned in the beginning of this section the algorithm uses \textit{gradual resizing}. This means that in every step the next target image will be shrinked a little bit and the pixels are then recalculated.\\
-The critical step is to find a good initial guess for shrinking the image. If the shrinking amount is to big some valueable information could get lost because of quality reduction. So \cite{bisi} found out that shrinking to a size of 95\% supplies good results.\\
-Figure \ref{fig:Gradual resizing} shows an example for gradual resizing. As it can be clearly seen every step has its own output image \textit{T\textsubscript{k}} and the most possible minimal distance value for its size.
+As mentioned in the beginning of this section, the algorithm uses \textit{gradual resizing}. This means that in every step the next target image will be shrunk a little bit and the pixels are then recalculated.\\
+The critical step is to find a good initial guess for shrinking the image. If the shrinking amount is too big, some valuable information could get lost because of quality reduction. So \cite{bisi} found out that shrinking to a size of 95\% delivers good results.\\
+Figure \ref{fig:Gradual resizing} shows an example for gradual resizing. As it can be clearly seen every step has its own output image \textit{T\textsubscript{k}} and the optimal minimal distance value for its size.
 
 \begin{figure}[h]
 \centering
@@ -123,13 +125,13 @@ After every resizing step the pixels must be recalculated to maintain the qualit
 \label{fig:Update rule}
 \end{figure}
 
-The update rule as desrcibed in \cite{bisi}:
+The update rule as desrcibed in \cite{bisi} and shown in figure \ref{fig:Update rule}:
 
 \vspace{15px}
-1. For each patch $\hat{P} \subset S$ find most similar patch $\hat{Q} \subset T^{(l)}$. Pixels in $\hat{P}$ vote for pixels in $\hat{Q}$ with weight $\frac{1}{N_{S}}$. (Completeness)
+1. For each patch $\hat{P} \subset S$ find most similar patch $\hat{Q} \subset T^{(l)}$. Pixels in $\hat{P}$ determine pixels in $\hat{Q}$ with weight $\frac{1}{N_{S}}$. (Completeness)
 
 \vspace{15px}
-2. For each patch $Q \subset T^{(l)}$ find the most similar source patch $P \subset S$. Colors of pixels in \textit{P} are votes for pixel in \textit{Q} with weight $\frac{1}{N_{T}}$. (Coherence)
+2. For each patch $Q \subset T^{(l)}$ find the most similar source patch $P \subset S$. Colors of pixels in \textit{P} determine pixels in \textit{Q} with weight $\frac{1}{N_{T}}$. (Coherence)
 
 \vspace{15px}
 3. For each target pixel $q$ take weighted average of all its votes as its new color $T^{(l+1)}(q)$.
@@ -154,14 +156,14 @@ Some more explanations to the update rule:
 - $N_{T}$ is the number of patches in $T$, while $m$ is the number of patches $Q$ containing $q$ in $T$. If the patches do have a size of $49$ pixels, there are also $49$ patches containing pixel $q$. 
 
 \vspace{7px}
-- Due to the different number of similar patches ($n$ and $m$ in every iteration) the votes must be weighted (Step 3).
+- Due to the different number of similar patches ($n$ and $m$ in every iteration) the color votes must be weighted (Step 3).
 
 
 
 \subsubsection{Importance weights}
-In some cases, it is undesirable that certain parts will be changed, e.g. when persons are involved. The algorithm will them look like unnaturally, because the algorithm does not know, that changing every part of a head is important for natural look.\\
-Figure \ref{fig:Importance_weights} shows the usage of importance weights. As it can be clearly seen that without importance weights the humans does not look natural anymore. The algorithm did not know that the heads are more important than the bookshelf in the background.\\
-Importance weights are simply white areas on an additional layer which tells the algorithm not to touch those pixels. The result with importance weight is much better than the one without. The heads look much more natural. But you can find some parts where some more importance weights would have been better like the shoulder of the woman in the middle of the image.
+In some cases, it is undesirable that certain parts will be changed, e.g. when persons are involved. The algorithm will make them look unnatural, because the algorithm does not know that if changing the shape of head or omit information of it will break the natural look.\\
+Figure \ref{fig:Importance_weights} shows the usage of importance weights. As it can be clearly seen that without importance weights the humans do not look natural anymore. The algorithm did not know that the heads are more important than the bookshelf in the background.\\
+Importance weights are simply white areas on an additional layer which tell the algorithm not to touch those pixels. The result with importance weight is much better than the one without. The heads look much more natural. But you can find some parts where some more importance weights would have been better like the shoulder of the woman in the center of the image.
 
 \begin{figure}[h]
 \centering
@@ -171,17 +173,17 @@ Importance weights are simply white areas on an additional layer which tells the
 \end{figure}
 
 \subsection{Conclusion: Performance and comparison}
-The performance of this algorithm is slower than similar algorithms. The current implementation in matlab needs 5 minutes to half the size of 250x200 pixels\footnotemark. The algorithm scales lineary and can be optimized by using multiple CPU/GPU. \cite{bisi}\\
-This algorithm is not limited to images only - it can also be used for video montage and synthesis. In advanced it can reshuffle photos or summarize (shorten) videos without changing the play speed.
+The performance of this algorithm is slower than that of similar algorithms. The current implementation in matlab needs 5 minutes to halve the size of 250x200 pixels\footnotemark. The algorithm scales lineary and can be optimized by using multiple CPU/GPU. \cite{bisi}\\
+This algorithm is not limited to images only - it can also be used for video montage and synthesis. Additionally, it can reshuffle photos or summarize (shorten) videos without changing the play speed.
 
 \footnotetext{Of course this depends on the machine but it gives an idea of the performance. }
 
 \subsubsection*{Comparison to seam carving}
 At the end of this section a small comparison to another similar algorithm: \textit{seam carving} \cite{seamcarv}.
-Figure \ref{fig:Seam carving} shows some comparing images to seam carving. As you can see, in most cases the result of bidirectional similarity looks better and not overfilled with redundancies (like the windows on the second and third image).\\
-The first comparison shows, that the cow on the summary of bidirectional image is missing, while it exists on the summary of seam carving. Depending on what information should be summarized it is a good or a bad summary. As the original image shows the cow and the human the result of bidirectional similarity is more likely a bad summary of the whole image but it preserves the quality of the human.\\
-The third image with the dolphin on it shows the weakness of seam carving as the dolphin gets in the result completely distorted and the whole image filled with water.\\
-The last image is quite special because both results are not so good summaries. The result of bidirectional similarity misses informations so it is hard to recognize what it is on the image. The result of seam carving has too much information on it or too many redundancies and it is not so easy to recognize the original building. The towers in the background are completely missing.\\
+Figure \ref{fig:Seam carving} shows some image comparisons to seam carving. As you can see, in most cases the result of bidirectional similarity looks better and not overloaded with redundancies (like the windows on the second and third image).\\
+The first comparison shows that the cow on the summary of bidirectional image is missing, while it exists on the summary of seam carving. Depending on what information should be summarized it is a good or a bad summary. As the original image shows the cow and the human the result of bidirectional similarity is more likely a bad summary of the whole image but it preserves the quality of the human.\\
+The third image with the dolphin shows the weakness of seam carving as the dolphin gets in the result completely distorted and the whole image filled with water.\\
+The last image is quite special because both results are poor summaries. The result of bidirectional similarity misses information so it is hard to recognize what is on the image. The result of seam carving has too much information on it or too many redundancies and it is not so easy to recognize the original building. The towers in the background are completely missing.\\
 
 
 \begin{figure}[h]
